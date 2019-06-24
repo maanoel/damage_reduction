@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'drugs.list.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'menu.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -57,35 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                     height: 80.0,
                     child: RaisedButton(
                       color: Colors.white,
-                      onPressed: () => {
-                            if (canLogin())
-                              {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DrugsListPage()),
-                                )
-                              }
-                            else
-                              {
-                                // set up the button
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Ops..."),
-                                      content: Text(
-                                          "Verifique seu login ou sua senha."),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text("OK"),
-                                          onPressed: () {},
-                                        )
-                                      ],
-                                    );
-                                  },
-                                )
-                              }
+                      onPressed: ()  =>  {
+                             tryLogin(),
                           },
                       child: Text('Entrar',
                           style: TextStyle(color: Colors.blueAccent)),
@@ -96,8 +70,58 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  canLogin() {
+  void tryLogin () async {
 
+    String login = _userNameController.text;
+    String senha = _passwordController.text;
+    bool userCanLogin = false;
+
+    var headers = {
+      "content-type" : "application/json",
+    "accept" : "application/json",
+    };
+
+   String data = '{"login": "$login", "accessKey": "$senha"}';
+
+    //parametrizar a url da api
+   var  resp = await http.post("http://192.168.200.1:5000/api/Login/v1",body: data, headers: headers);
+
+   final body = jsonDecode(resp.body);
+
+   print(body["autenticated"] );
+
+    if(body["autenticated"] == true){
+      userCanLogin = true;
+    }
+
+    if (userCanLogin)
+      {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Menu()),
+      );
+    }
+    else
+    {
+      // set up the button
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Ops..."),
+            content: Text(
+                "Verifique seu login ou sua senha."),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () {},
+              )
+            ],
+          );
+        },
+      );
+    }
   }
 
 }

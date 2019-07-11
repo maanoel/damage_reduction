@@ -89,10 +89,10 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(10),
                           child: GestureDetector(
                             onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Menu())
-                              );
+                              //Navigator.push(
+                                //  context,
+                                  //MaterialPageRoute(builder: (context) => Menu())
+                              //);
                             },
                             child: Text('Esqueci minha senha',
                                 style: TextStyle(
@@ -127,8 +127,6 @@ class _LoginPageState extends State<LoginPage> {
         body: data, headers: headers);
 
     final body = jsonDecode(resp.body);
-
-    print(body["autenticated"]);
 
     if (body["autenticated"] == true) {
       userCanLogin = true;

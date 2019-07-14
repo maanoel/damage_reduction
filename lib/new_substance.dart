@@ -1,30 +1,68 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'menu.dart';
+import 'package:image_picker/image_picker.dart';
 
-class NewSubstancePage extends StatefulWidget {
+class SubstancePage extends StatefulWidget {
   @override
-  NewSubstanceState createState() => NewSubstanceState();
+  _SbustancePageState createState() => _SbustancePageState();
 }
 
-class NewSubstanceState extends State<NewSubstancePage> {
+class _SbustancePageState extends State {
+
+  File _image;
+
+  Future getImageFromCam() async { // for camera
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future getImageFromGallery() async {// for gallery
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.blueAccent, title: Text("Nova substância")),
-      backgroundColor: Colors.white,
-      body: Padding(
-          padding: EdgeInsets.all(10),
-          child: Form(child:
-          Container(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,children: <Widget>[
+        appBar: AppBar(
+          backgroundColor: Colors.blueAccent,
+          title: Text('Nova substância'),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200.0,
+              child: Center(
+                child: _image == null
+                    ? Text('Nenhuma imagem selecionada.')
+                    : Image.file(_image),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FloatingActionButton(
+                  onPressed: getImageFromCam,
+                  tooltip: 'Carregue uma imagem',
+                  child: Icon(Icons.add_a_photo),
+                ),
+                FloatingActionButton(
 
-
+                  onPressed: getImageFromGallery,
+                  tooltip: 'Carregar imagem',
+                  child: Icon(Icons.wallpaper),
+                ),
               ],
-
-          )))),
+            ),
+          ],
+        )
     );
   }
+
 }

@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   image_picker: "^0.4.5"
   image_cropper: "^0.0.4"
+  dio: "2.1.13" 
 
 dev_dependencies:
   flutter_test:

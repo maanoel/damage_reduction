@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dio/dio.dart';
 
 class SubstancePage extends StatefulWidget {
   @override
@@ -9,17 +10,23 @@ class SubstancePage extends StatefulWidget {
 }
 
 class _SbustancePageState extends State {
-
   File _image;
+  final _name = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _nameScientific = TextEditingController();
+  final _description = TextEditingController();
+  final _composto = TextEditingController();
 
-  Future getImageFromCam() async { // for camera
+  Future getImageFromCam() async {
+    // for camera
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;
     });
   }
 
-  Future getImageFromGallery() async {// for gallery
+  Future getImageFromGallery() async {
+    // for gallery
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
@@ -35,34 +42,139 @@ class _SbustancePageState extends State {
         ),
         body: ListView(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200.0,
-              child: Center(
-                child: _image == null
-                    ? Text('Nenhuma imagem selecionada.')
-                    : Image.file(_image),
-              ),
+            Divider(),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 200.0,
+                  child: Center(
+                    child: _image == null
+                        ? Text('Nenhuma imagem de substância selecionada.')
+                        : Image.file(_image),
+                  ),
+                )
+              ],
             ),
+            Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FloatingActionButton(
-                  onPressed: getImageFromCam,
-                  tooltip: 'Carregue uma imagem',
-                  child: Icon(Icons.add_a_photo),
-                ),
-                FloatingActionButton(
-
+                Container(
+                    child: FloatingActionButton(
+                        backgroundColor: Colors.blueAccent,
+                        heroTag: null,
+                        onPressed: getImageFromCam,
+                        tooltip: 'Carregue uma imagem',
+                        child: IconTheme(
+                          data: IconThemeData(color: Colors.white),
+                          child: Icon(Icons.add_a_photo),
+                        ))),
+                Container(
+                    child: FloatingActionButton(
+                  backgroundColor: Colors.blueAccent,
+                  heroTag: null,
                   onPressed: getImageFromGallery,
                   tooltip: 'Carregar imagem',
                   child: Icon(Icons.wallpaper),
-                ),
+                )),
               ],
             ),
+            Divider(),
+            Form(
+              key: _formKey,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _name,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Nome comum da substância'),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Preencha o nome comum da substância antes de continuar';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _nameScientific,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Nome científico da substância'),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Preencha o nome científico da substância antes de continuar';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _composto,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Composto da substância'),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Preencha o composto da substância antes de continuar';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _description,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Descrição da substância'),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Preencha o nome da substância antes de continuar';
+                        }
+                        return null;
+                      },
+                    ),
+                    ButtonTheme(
+                      height: 40,
+                      child: RaisedButton(
+                        color: Colors.white70,
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            newSubstance();
+                          }
+                        },
+                        child: Text('Cadastrar'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
-        )
-    );
+        ));
   }
 
+  newSubstance() async {
+    String name = _name.text;
+    String nameScientific = _nameScientific.text;
+    String description = _description.text;
+    String composto = _composto.text;
+
+    var headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+    };
+
+    FormData formData = new FormData.from({
+      "name": "$name",
+      "nameScientific": "$nameScientific",
+      "description": "$description",
+      "composto": "$composto",
+      "file1": new UploadFileInfo(_image, "file.jpg")
+  });
+
+    Response response = await Dio().post("/info", data: formData);
+  }
 }

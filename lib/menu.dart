@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'new_substance.dart';
 import 'ButtonsToNavigation.dart';
+import 'substance_list.dart';
+import 'phone.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -31,7 +33,13 @@ class _MenuState extends State<Menu> {
                               Icons.enhanced_encryption,
                               size: 70.0,
                             ),
-                            onPressed: () {})),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SubstanceListPage(),
+                                  ));
+                            })),
                   ),
                   SizedBox(
                     width: 20.0,
@@ -85,7 +93,13 @@ class _MenuState extends State<Menu> {
                             Icons.phone,
                             size: 70.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PhoneListPage(),
+                                ));
+                          },
                         ),
                         data: IconThemeData(
                           color: Colors.lightBlueAccent,

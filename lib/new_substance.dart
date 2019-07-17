@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'substance_list.dart';
 
 class SubstancePage extends StatefulWidget {
   @override
@@ -158,6 +159,7 @@ class _SbustancePageState extends State {
   }
 
   newSubstance() async {
+
     String name = _name.text;
     String nameScientific = _nameScientific.text;
     String description = _description.text;
@@ -171,15 +173,37 @@ class _SbustancePageState extends State {
     List<int> imageBytes = _image.readAsBytesSync();
     String imageBase64 = base64Encode(imageBytes);
 
-    FormData formData = new FormData.from({
-      "name": "$name",
-      "nameScientific": "$nameScientific",
-      "description": "$description",
-      "composto": "$composto",
-      "dataRegistro" : "2019-07-16T02:51:22.738Z",
-      "base64Image": imageBase64
-  });
+    String data =
+        '{"name": "$name", "nameScientific": "$nameScientific", "description": "$description", '
+        '"composto": "$composto", "dataRegistro": "2019-07-16T02:51:22.738Z", "base64Image": "$imageBase64"}';
 
-    Response response = await Dio().post("http://192.168.200.1:5000/Substance/v1", data: formData);
+    Dio dio = new Dio();
+    dio.options.contentType = ContentType.parse("application/json");
+
+    Response response = await dio.post("http://192.168.200.1:5000/api/Substance/v1", data: data);
+
+    if(response.statusCode == 200){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Substancia Cadastrada"),
+            content: Text("A Substância foi cadastrada!."),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SubstanceListPage()),
+                  );
+                },
+              )
+            ],
+          );
+        },
+      );
+    }
+
   }
 }

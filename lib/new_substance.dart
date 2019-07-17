@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class SubstancePage extends StatefulWidget {
   @override
@@ -167,14 +168,18 @@ class _SbustancePageState extends State {
       "accept": "application/json",
     };
 
+    List<int> imageBytes = _image.readAsBytesSync();
+    String imageBase64 = base64Encode(imageBytes);
+
     FormData formData = new FormData.from({
       "name": "$name",
       "nameScientific": "$nameScientific",
       "description": "$description",
       "composto": "$composto",
-      "file1": new UploadFileInfo(_image, "file.jpg")
+      "dataRegistro" : "2019-07-16T02:51:22.738Z",
+      "base64Image": imageBase64
   });
 
-    Response response = await Dio().post("/info", data: formData);
+    Response response = await Dio().post("http://192.168.200.1:5000/Substance/v1", data: formData);
   }
 }

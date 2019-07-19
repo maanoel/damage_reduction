@@ -29,6 +29,7 @@ class _SbustanceListPageState extends State {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           return Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.blueAccent,
                 title: Text('Substâncias'),
               ),
@@ -64,7 +65,7 @@ class _SbustanceListPageState extends State {
       "accept": "application/json",
     };
 
-    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1",
+    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1/",
         headers: headers);
 
     _substanceList = json.decode(resp.body);

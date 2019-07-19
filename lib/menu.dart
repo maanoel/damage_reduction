@@ -14,7 +14,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          AppBar(backgroundColor: Colors.blueAccent, title: Text("Good Trip")),
+          AppBar(backgroundColor: Colors.blueAccent, title: Text("Good Trip"), automaticallyImplyLeading: false,),
       backgroundColor: Colors.white,
       body: Container(
           padding: EdgeInsets.only(bottom: 20.0),

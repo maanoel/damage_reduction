@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
 
 class SubstanceDetailPage extends StatefulWidget {
-  @override
-  _SbustanceDetailPageState createState() => _SbustanceDetailPageState();
-
-  int id;
+   int id;
 
   SubstanceDetailPage({Key key, @required this.id}) : super(key: key);
+
+   @override
+   _SbustanceDetailPageState createState() => _SbustanceDetailPageState(id);
+
 }
 
 class _SbustanceDetailPageState extends State {
+
+  List<dynamic> _comentsLits = new List();
+  List<dynamic> _substanceList = new List();
   File _image;
-  List<dynamic> _comentsLits;
+  int id = 0 ;
+
+  _SbustanceDetailPageState(int id){
+    this.id = id;
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
-        future: populate(),
+        future: populateSub(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           return Scaffold(
               appBar: AppBar(
@@ -98,16 +109,43 @@ class _SbustanceDetailPageState extends State {
                             )),
                       ),
                       Divider(),
+                      /*
+                      TODO POPULATE COMMAND
                       Container(
                         child: ListView.separated(
                           itemBuilder: (context, index) {},
-                          //itemCount: _comentsLits.length,
+                          itemCount: 0,
                         ),
                       )
+                      */
                     ],
                   )));
         });
   }
 
-  Future<String> populate() async {}
+  Future<String> populateSub() async {
+
+    var headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+    };
+
+    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1/" + id.toString(),
+        headers: headers);
+
+    _substanceList = json.decode(resp.body);
+
+  }
+
+  Future<String> populateComments() async {
+    var headers = {
+      "content-type": "application/json",
+      "accept": "application/json",
+    };
+
+    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1/",
+        headers: headers);
+
+    _comentsLits = json.decode(resp.body);
+  }
 }

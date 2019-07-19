@@ -13,20 +13,6 @@ class SubstanceListPage extends StatefulWidget {
   _SbustanceListPageState createState() => _SbustanceListPageState();
 }
 
-class Substance {
-  String name;
-
-  String nameScientific;
-
-  String description;
-
-  String composto;
-
-  DateTime dataRegistro;
-
-  String base64Image;
-}
-
 class _SbustanceListPageState extends State {
   List<dynamic> _substanceList = new List();
 
@@ -46,12 +32,22 @@ class _SbustanceListPageState extends State {
                 backgroundColor: Colors.blueAccent,
                 title: Text('Substâncias'),
               ),
-              body: ListView.builder(
+              body: ListView.separated(
                 itemCount: _substanceList.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text('${_substanceList[index].name}'),
+                    onTap: (){
+
+                    },
+                      leading: CircleAvatar(
+                        backgroundImage: Image.memory(Base64Decoder().convert(('${_substanceList[index]['base64Image']}'))).image,
+                      ),
+                    title: Text('${_substanceList[index]['name']}'),
+                    trailing: Icon(Icons.keyboard_arrow_right)
                   );
+                },
+                separatorBuilder: (context, index){
+                    return Divider();
                 },
               ),
               bottomNavigationBar: ButtonsNavigatorInginer()

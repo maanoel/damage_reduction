@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'ButtonsToNavigation.dart';
 import 'package:http/http.dart' as http;
+import 'sub_detail.dart';
 import 'dart:convert';
 import 'package:flutter/scheduler.dart';
 
@@ -21,7 +22,6 @@ class _SbustanceListPageState extends State {
     @override
     void initState() {
       super.initState();
-      getSubstances();
     }
 
     return FutureBuilder<String>(
@@ -37,7 +37,10 @@ class _SbustanceListPageState extends State {
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: (){
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SubstanceDetailPage(id: _substanceList[index]['id'])),
+                      );
                     },
                       leading: CircleAvatar(
                         backgroundImage: Image.memory(Base64Decoder().convert(('${_substanceList[index]['base64Image']}'))).image,

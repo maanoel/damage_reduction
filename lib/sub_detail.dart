@@ -1,27 +1,62 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 
+class Substance {
+  int id;
+  String name;
+  String name_scie;
+  String descricao;
+  String composto;
+  DateTime dt_reg;
+  Uint8List photo;
+
+
+  Substance() {}
+
+  Substance.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        name_scie = json['nameScientific'],
+        composto = json['composto'],
+        descricao = json['description'],
+        dt_reg = DateTime.parse(json['dataRegistro']),
+        photo = base64Decode(json['base64Image']);
+
+  // method
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'name_scie': name_scie,
+      'descricao': descricao,
+      'composto': composto,
+      'dt_reg': dt_reg,
+      'photo': json.encode(photo)
+    };
+  }
+}
+
 class SubstanceDetailPage extends StatefulWidget {
-   int id;
+  int id;
 
   SubstanceDetailPage({Key key, @required this.id}) : super(key: key);
 
-   @override
-   _SbustanceDetailPageState createState() => _SbustanceDetailPageState(id);
-
+  @override
+  _SbustanceDetailPageState createState() => _SbustanceDetailPageState(id);
 }
 
 class _SbustanceDetailPageState extends State {
-
   List<dynamic> _comentsLits = new List();
-  List<dynamic> _substanceList = new List();
   File _image;
-  int id = 0 ;
+  int id = 0;
 
-  _SbustanceDetailPageState(int id){
+  Substance _substance;
+
+  _SbustanceDetailPageState(int id) {
     this.id = id;
   }
 
@@ -33,7 +68,7 @@ class _SbustanceDetailPageState extends State {
           return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.blueAccent,
-                title: Text('Cahaça'),
+                title: Text(_substance.name),
               ),
               body: Container(
                   padding: EdgeInsets.all(10),
@@ -43,13 +78,7 @@ class _SbustanceDetailPageState extends State {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
-                          Text("Cachaça",
-                              style: TextStyle(
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Divider(),
-                          Text("Alcool",
+                          Text(_substance.name_scie,
                               style: TextStyle(
                                 fontSize: 22.0,
                                 color: Colors.black45,
@@ -61,10 +90,10 @@ class _SbustanceDetailPageState extends State {
                         width: MediaQuery.of(context).size.width,
                         height: 200.0,
                         child: Center(
-                          child: _image == null
-                              ? Text('Problema ao carregar a imagem.')
-                              : Image.file(_image),
-                        ),
+                            child: _substance.photo == null
+                                ? Text('Problema ao carregar a imagem.')
+                                : Center(
+                                    child: Image.memory(_substance.photo))),
                       ),
                       Divider(),
                       Container(
@@ -124,17 +153,17 @@ class _SbustanceDetailPageState extends State {
   }
 
   Future<String> populateSub() async {
-
     var headers = {
       "content-type": "application/json",
       "accept": "application/json",
     };
 
-    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1/" + id.toString(),
+    var resp = await http.get(
+        "http://192.168.200.1:5000/api/Substance/v1/" + id.toString(),
         headers: headers);
 
-    _substanceList = json.decode(resp.body);
-
+    Map<String, dynamic> map = jsonDecode(resp.body);
+    _substance = Substance.fromJson(map);
   }
 
   Future<String> populateComments() async {

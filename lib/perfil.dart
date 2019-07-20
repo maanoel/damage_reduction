@@ -5,19 +5,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'ButtonsToNavigation.dart';
 
-class PhoneListPage extends StatefulWidget {
+class PerfilPage extends StatefulWidget {
   @override
-  _PhoneceListPageState createState() => _PhoneceListPageState();
+  _PerfilPageState createState() => _PerfilPageState();
 }
 
-class _PhoneceListPageState extends State {
+class _PerfilPageState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.blueAccent,
-          title: Text('Telêfones de emergência'),
+          title: Text('Meu Perfil'),
         ),
         body: null,
         bottomNavigationBar:

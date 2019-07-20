@@ -55,7 +55,7 @@ class _SbustanceListPageState extends State {
                 },
               ),
               bottomNavigationBar: ButtonsNavigatorInginer()
-                  .ButtonsToNavigator()); // unreachable
+                  .ButtonsToNavigator(context)); // unreachable
         });
   }
 

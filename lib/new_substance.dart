@@ -39,7 +39,7 @@ class _SbustancePageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           backgroundColor: Colors.blueAccent,
           title: Text('Nova substância'),
         ),

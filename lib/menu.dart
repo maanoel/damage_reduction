@@ -13,8 +13,11 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(backgroundColor: Colors.blueAccent, title: Text("Good Trip"), automaticallyImplyLeading: false,),
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        title: Text("Good Trip"),
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: Colors.white,
       body: Container(
           padding: EdgeInsets.only(bottom: 20.0),
@@ -59,10 +62,10 @@ class _MenuState extends State<Menu> {
                         child: IconButton(
                             onPressed: () {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
+                                  context,
+                                  MaterialPageRoute(
                                     builder: (context) => SubstancePage(),
-                              ));
+                                  ));
                             },
                             tooltip: "Inserir uma substância",
                             icon: Icon(
@@ -116,14 +119,142 @@ class _MenuState extends State<Menu> {
                   )
                 ]),
                 Divider(),
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: IconTheme(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.assessment,
+                            size: 70.0,
+                          ),
+                          onPressed: () {},
+                        ),
+                        data: IconThemeData(
+                          color: Colors.lightBlueAccent,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.5, horizontal: 1.0),
+                    margin: EdgeInsets.all(2.0),
+                    child: Text("Data Science"),
+                  )
+                ]),
+                Divider(),
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: IconTheme(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.info,
+                            size: 70.0,
+                          ),
+                          onPressed: () {},
+                        ),
+                        data: IconThemeData(
+                          color: Colors.lightBlueAccent,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.5, horizontal: 1.0),
+                    margin: EdgeInsets.all(2.0),
+                    child: Text("Informações"),
+                  )
+                ]),
+                Divider(),
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: IconTheme(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.attach_file,
+                            size: 70.0,
+                          ),
+                          onPressed: () {},
+                        ),
+                        data: IconThemeData(
+                          color: Colors.lightBlueAccent,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.5, horizontal: 1.0),
+                    margin: EdgeInsets.all(2.0),
+                    child: Text("Artigos"),
+                  )
+                ]),
+                Divider(),
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: IconTheme(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.insert_drive_file,
+                            size: 70.0,
+                          ),
+                          onPressed: () {},
+                        ),
+                        data: IconThemeData(
+                          color: Colors.lightBlueAccent,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Container(
+                    padding:
+                    EdgeInsets.symmetric(vertical: 0.5, horizontal: 1.0),
+                    margin: EdgeInsets.all(2.0),
+                    child: Text("Cadastrar Arquivos"),
+                  )
+                ]),
+                Divider(),
+                Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: IconTheme(
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.settings,
+                            size: 70.0,
+                          ),
+                          onPressed: () {},
+                        ),
+                        data: IconThemeData(
+                          color: Colors.lightBlueAccent,
+                        )),
+                  ),
+                  SizedBox(
+                    width: 20.0,
+                  ),
+                  Container(
+                    padding:
+                    EdgeInsets.symmetric(vertical: 0.5, horizontal: 1.0),
+                    margin: EdgeInsets.all(2.0),
+                    child: Text("Configurações"),
+                  )
+                ]),
               ],
             ),
           )),
-      bottomNavigationBar: ButtonsNavigatorInginer().ButtonsToNavigator(),
+      bottomNavigationBar:
+          ButtonsNavigatorInginer().ButtonsToNavigator(context),
     );
   }
-
-
 
   BoxDecoration boxDecorationMenu() {
     return BoxDecoration(

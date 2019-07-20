@@ -5,22 +5,22 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'ButtonsToNavigation.dart';
 
-class PhoneListPage extends StatefulWidget {
+class ArtigoListPage extends StatefulWidget {
   @override
-  _PhoneceListPageState createState() => _PhoneceListPageState();
+  ArtigoListPageeState createState() => ArtigoListPageeState();
 }
 
-class _PhoneceListPageState extends State {
+class ArtigoListPageeState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.blueAccent,
-          title: Text('Telêfones de emergência'),
+          title: Text('Lista de Artigos'),
         ),
         body: null,
         bottomNavigationBar:
-            ButtonsNavigatorInginer().ButtonsToNavigator(context));
+        ButtonsNavigatorInginer().ButtonsToNavigator(context));
   }
 }

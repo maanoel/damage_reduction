@@ -12,99 +12,100 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-
   @override
     Widget build(BuildContext context) {
         return Scaffold(
           backgroundColor: Colors.blueAccent,
           body: Padding(
               padding: EdgeInsets.all(10.0),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.directions_bike,
-                      size: 140.0,
-                      color: Colors.white,
-                    ),
-                    Center(
-                      // padding: EdgeInsets.all(10.0),
-                        child: Text('Good Trip',
-                            style: TextStyle(color: Colors.white, fontSize: 30.0))),
-                    Divider(),
-                    TextFormField(
-                      controller: _userNameController,
-                      autofocus: true,
-                      //keyboardType: TextInputType.number,
-                      style: new TextStyle(color: Colors.white, fontSize: 30.0),
-                      decoration: InputDecoration(
-                          labelText: "Login",
-                          labelStyle: TextStyle(color: Colors.white)),
-                    ),
-                    Divider(),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      autofocus: true,
-                      //keyboardType: TextInputType.number,
-                      style: new TextStyle(color: Colors.white, fontSize: 30.0),
-                      decoration: InputDecoration(
-                          labelText: "Senha",
-                          labelStyle: TextStyle(color: Colors.white)),
-                    ),
-                    Divider(),
-                    ButtonTheme(
-                        height: 80.0,
-                        child: RaisedButton(
-                          color: Colors.white,
-                          onPressed: () => {
-                            tryLogin(),
-                          },
-                          child: Text('Entrar',
-                              style: TextStyle(color: Colors.blueAccent)),
-                        )),
-                    Divider(),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.all(25),
-                            child: GestureDetector(
-                                onTap: () {
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => NewUserPage()),
-                                  );
-
-                                },
-                                child: Text('Não tenho uma conta',
-                                    style: TextStyle(
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                        fontSize: 15)))),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: GestureDetector(
-                            onTap: (){
-                              //Navigator.push(
-                                //  context,
-                                  //MaterialPageRoute(builder: (context) => Menu())
-                              //);
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.directions_bike,
+                        size: 140.0,
+                        color: Colors.white,
+                      ),
+                      Center(
+                        // padding: EdgeInsets.all(10.0),
+                          child: Text('Good Trip',
+                              style: TextStyle(color: Colors.white, fontSize: 30.0))),
+                      Divider(),
+                      TextFormField(
+                        controller: _userNameController,
+                        autofocus: true,
+                        //keyboardType: TextInputType.number,
+                        style: new TextStyle(color: Colors.white, fontSize: 30.0),
+                        decoration: InputDecoration(
+                            labelText: "Login",
+                            labelStyle: TextStyle(color: Colors.white)),
+                      ),
+                      Divider(),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        autofocus: true,
+                        //keyboardType: TextInputType.number,
+                        style: new TextStyle(color: Colors.white, fontSize: 30.0),
+                        decoration: InputDecoration(
+                            labelText: "Senha",
+                            labelStyle: TextStyle(color: Colors.white)),
+                      ),
+                      Divider(),
+                      ButtonTheme(
+                          height: 80.0,
+                          child: RaisedButton(
+                            color: Colors.white,
+                            onPressed: () => {
+                              tryLogin(),
                             },
-                            child: Text('Esqueci minha senha',
-                                style: TextStyle(
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 15)),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                            child: Text('Entrar',
+                                style: TextStyle(color: Colors.blueAccent)),
+                          )),
+                      Divider(),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.all(25),
+                              child: GestureDetector(
+                                  onTap: () {
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => NewUserPage()),
+                                    );
+
+                                  },
+                                  child: Text('Não tenho uma conta',
+                                      style: TextStyle(
+                                          color: Colors.white70,
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.italic,
+                                          fontSize: 15)))),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: GestureDetector(
+                              onTap: (){
+                                //Navigator.push(
+                                  //  context,
+                                    //MaterialPageRoute(builder: (context) => Menu())
+                                //);
+                              },
+                              child: Text('Esqueci minha senha',
+                                  style: TextStyle(
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 15)),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               )),
         );

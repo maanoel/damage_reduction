@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'substance_list.dart';
+import 'config.dart';
 
 class SubstancePage extends StatefulWidget {
   @override
@@ -181,7 +182,7 @@ class _SbustancePageState extends State {
     Dio dio = new Dio();
     dio.options.contentType = ContentType.parse("application/json");
 
-    Response response = await dio.post("http://192.168.200.1:5000/api/Substance/v1", data: data);
+    Response response = await dio.post(GLOBAL_VARIABLES['API_URL'] + "/Substance/v1", data: data);
 
     if(response.statusCode == 200){
       showDialog(

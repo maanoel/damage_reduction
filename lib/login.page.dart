@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'menu.dart';
 import 'new_user.dart';
+import 'config.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -124,7 +125,8 @@ class _LoginPageState extends State<LoginPage> {
     String data = '{"login": "$login", "accessKey": "$senha"}';
 
     //parametrizar a url da api
-    var resp = await http.post("http://192.168.200.1:5000/api/Login/v1",
+
+    var resp = await http.post(GLOBAL_VARIABLES["API_URL"] + "/Login/v1",
         body: data, headers: headers);
 
     final body = jsonDecode(resp.body);

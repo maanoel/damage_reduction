@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'sub_detail.dart';
 import 'dart:convert';
 import 'package:flutter/scheduler.dart';
+import 'config.dart';
 
 class SubstanceListPage extends StatefulWidget {
   @override
@@ -65,7 +66,7 @@ class _SbustanceListPageState extends State {
       "accept": "application/json",
     };
 
-    var resp = await http.get("http://192.168.200.1:5000/api/Substance/v1/",
+    var resp = await http.get(GLOBAL_VARIABLES['API_URL'] + "/Substance/v1/",
         headers: headers);
 
     _substanceList = json.decode(resp.body);
